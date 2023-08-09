@@ -37,5 +37,6 @@ enum class JuiceColor(val color: Int, @StringRes val label: Int) {
     Green(Color.GREEN, R.string.green),
     Cyan(Color.CYAN, R.string.cyan),
     Yellow(Color.YELLOW, R.string.yellow),
+    Orange(Color.YELLOW, R.string.orange),
     Magenta(Color.MAGENTA, R.string.magenta)
 }
