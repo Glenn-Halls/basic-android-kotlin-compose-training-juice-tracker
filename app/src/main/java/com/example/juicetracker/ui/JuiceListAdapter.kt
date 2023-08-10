@@ -17,10 +17,12 @@ package com.example.juicetracker.ui
 
 import android.view.ViewGroup
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
@@ -46,6 +48,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.juicetracker.R
 import com.example.juicetracker.data.Juice
 import com.example.juicetracker.data.JuiceColor
+import com.google.accompanist.themeadapter.material3.Mdc3Theme
 
 class JuiceListAdapter(
     private var onEdit: (Juice) -> Unit,
@@ -58,7 +61,19 @@ class JuiceListAdapter(
         private val onDelete: (Juice) -> Unit
     ) : RecyclerView.ViewHolder(composeView) {
 
-        fun bind(juice: Juice) {
+        fun bind(input: Juice) {
+            composeView.setContent {
+                ListItem(
+                    input,
+                    onDelete,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {
+                            onEdit(input)
+                        }
+                        .padding(vertical = 8.dp, horizontal = 16.dp)
+                )
+            }
 
         }
     }
@@ -92,11 +107,20 @@ fun ListItem(
     onDelete: (Juice) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column {
-        JuiceIcon(input.color)
-        JuiceDetails(juice = input)
-        RatingDisplay(input.rating)
-        DeleteButton({})
+    Mdc3Theme{
+        Row(
+            modifier = modifier,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            JuiceIcon(input.color)
+            JuiceDetails(input, Modifier.weight(1f))
+            DeleteButton(
+                onDelete = {
+                    onDelete(input)
+                },
+                modifier = Modifier.align(Alignment.Top)
+            )
+        }
     }
 }
 
@@ -154,7 +178,7 @@ fun RatingDisplay(rating: Int, modifier: Modifier = Modifier) {
 @Composable
 fun DeleteButton(onDelete: () -> Unit, modifier: Modifier = Modifier) {
     IconButton(
-        onClick = { onDelete },
+        onClick = { onDelete() },
         modifier = modifier,
     ) {
         Icon(
