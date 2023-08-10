@@ -74,4 +74,7 @@ dependencies {
     implementation("com.google.android.material:material:1.9.0")
     ksp("androidx.room:room-compiler:${rootProject.extra["room_version"]}")
     debugImplementation("androidx.compose.ui:ui-tooling")
+
+    // Google Play services
+    implementation("com.google.android.gms:play-services-ads-base:22.2.0")
 }
