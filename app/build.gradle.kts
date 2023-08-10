@@ -76,5 +76,5 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
 
     // Google Play services
-    implementation("com.google.android.gms:play-services-ads-base:22.2.0")
+    implementation("com.google.android.gms:play-services-ads:22.2.0")
 }
